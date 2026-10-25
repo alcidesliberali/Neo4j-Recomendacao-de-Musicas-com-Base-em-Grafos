@@ -1,0 +1,82 @@
+// 1. Limpar banco (opcional, para garantir que comece do zero)
+MATCH (n) DETACH DELETE n;
+
+// 2. Criar Gêneros
+CREATE 
+  (gRock:Genre {name: 'Rock'}),
+  (gPop:Genre {name: 'Pop'}),
+  (gHipHop:Genre {name: 'Hip Hop'}),
+  (gJazz:Genre {name: 'Jazz'});
+
+// 3. Criar Artistas
+CREATE 
+  (aBeatles:Artist {name: 'The Beatles'}), (aQueen:Artist {name: 'Queen'}), (aLed:Artist {name: 'Led Zeppelin'}), (aPink:Artist {name: 'Pink Floyd'}),
+  (aMJ:Artist {name: 'Michael Jackson'}), (aMadonna:Artist {name: 'Madonna'}), (aTaylor:Artist {name: 'Taylor Swift'}), (aGaga:Artist {name: 'Lady Gaga'}),
+  (aEminem:Artist {name: 'Eminem'}), (aTupac:Artist {name: '2Pac'}), (aKendrick:Artist {name: 'Kendrick Lamar'}), (aJayZ:Artist {name: 'Jay-Z'}),
+  (aMiles:Artist {name: 'Miles Davis'}), (aColtrane:Artist {name: 'John Coltrane'}), (aArmstrong:Artist {name: 'Louis Armstrong'});
+
+// 4. Criar Músicas e Relacionamentos Estruturais
+CREATE
+  // Rock
+  (s1:Song {title: 'Hey Jude'})-[:COMPOSED_BY]->(aBeatles), (s1)-[:IN_GENRE]->(gRock),
+  (s2:Song {title: 'Let It Be'})-[:COMPOSED_BY]->(aBeatles), (s2)-[:IN_GENRE]->(gRock),
+  (s3:Song {title: 'Bohemian Rhapsody'})-[:COMPOSED_BY]->(aQueen), (s3)-[:IN_GENRE]->(gRock),
+  (s4:Song {title: 'We Will Rock You'})-[:COMPOSED_BY]->(aQueen), (s4)-[:IN_GENRE]->(gRock),
+  (s5:Song {title: 'Stairway to Heaven'})-[:COMPOSED_BY]->(aLed), (s5)-[:IN_GENRE]->(gRock),
+  (s6:Song {title: 'Wish You Were Here'})-[:COMPOSED_BY]->(aPink), (s6)-[:IN_GENRE]->(gRock),
+  
+  // Pop
+  (s7:Song {title: 'Billie Jean'})-[:COMPOSED_BY]->(aMJ), (s7)-[:IN_GENRE]->(gPop),
+  (s8:Song {title: 'Thriller'})-[:COMPOSED_BY]->(aMJ), (s8)-[:IN_GENRE]->(gPop),
+  (s9:Song {title: 'Like a Prayer'})-[:COMPOSED_BY]->(aMadonna), (s9)-[:IN_GENRE]->(gPop),
+  (s10:Song {title: 'Vogue'})-[:COMPOSED_BY]->(aMadonna), (s10)-[:IN_GENRE]->(gPop),
+  (s11:Song {title: 'Shake It Off'})-[:COMPOSED_BY]->(aTaylor), (s11)-[:IN_GENRE]->(gPop),
+  (s12:Song {title: 'Bad Romance'})-[:COMPOSED_BY]->(aGaga), (s12)-[:IN_GENRE]->(gPop),
+
+  // Hip Hop
+  (s13:Song {title: 'Lose Yourself'})-[:COMPOSED_BY]->(aEminem), (s13)-[:IN_GENRE]->(gHipHop),
+  (s14:Song {title: 'Stan'})-[:COMPOSED_BY]->(aEminem), (s14)-[:IN_GENRE]->(gHipHop),
+  (s15:Song {title: 'California Love'})-[:COMPOSED_BY]->(aTupac), (s15)-[:IN_GENRE]->(gHipHop),
+  (s16:Song {title: 'Changes'})-[:COMPOSED_BY]->(aTupac), (s16)-[:IN_GENRE]->(gHipHop),
+  (s17:Song {title: 'HUMBLE'})-[:COMPOSED_BY]->(aKendrick), (s17)-[:IN_GENRE]->(gHipHop),
+  (s18:Song {title: 'Empire State of Mind'})-[:COMPOSED_BY]->(aJayZ), (s18)-[:IN_GENRE]->(gHipHop),
+
+  // Jazz
+  (s19:Song {title: 'So What'})-[:COMPOSED_BY]->(aMiles), (s19)-[:IN_GENRE]->(gJazz),
+  (s20:Song {title: 'Blue in Green'})-[:COMPOSED_BY]->(aMiles), (s20)-[:IN_GENRE]->(gJazz),
+  (s21:Song {title: 'Giant Steps'})-[:COMPOSED_BY]->(aColtrane), (s21)-[:IN_GENRE]->(gJazz),
+  (s22:Song {title: 'My Favorite Things'})-[:COMPOSED_BY]->(aColtrane), (s22)-[:IN_GENRE]->(gJazz),
+  (s23:Song {title: 'What a Wonderful World'})-[:COMPOSED_BY]->(aArmstrong), (s23)-[:IN_GENRE]->(gJazz),
+  (s24:Song {title: 'Hello Dolly'})-[:COMPOSED_BY]->(aArmstrong), (s24)-[:IN_GENRE]->(gJazz);
+
+// 5. Criar Usuários
+CREATE 
+  (u1:User {name: 'João'}), (u2:User {name: 'Maria'}), (u3:User {name: 'Pedro'}), (u4:User {name: 'Ana'}),
+  (u5:User {name: 'Lucas'}), (u6:User {name: 'Julia'}), (u7:User {name: 'Carlos'}), (u8:User {name: 'Fernanda'}),
+  (u9:User {name: 'Camila'}), (u10:User {name: 'Marcos'}), (u11:User {name: 'Rafael'}), (u12:User {name: 'Beatriz'}),
+  (u13:User {name: 'Gustavo'}), (u14:User {name: 'Felipe'}), (u15:User {name: 'Joaquim'});
+
+// 6. Criar Interações (Quem ouviu o quê)
+// Grupo 1: Fãs de Rock e Pop
+CREATE
+  (u1)-[:LISTENED_TO {play_count: 12}]->(s1), (u1)-[:LISTENED_TO {play_count: 5}]->(s3), (u1)-[:LISTENED_TO {play_count: 8}]->(s7),
+  (u2)-[:LISTENED_TO {play_count: 20}]->(s3), (u2)-[:LISTENED_TO {play_count: 15}]->(s4), (u2)-[:LISTENED_TO {play_count: 3}]->(s1),
+  (u3)-[:LISTENED_TO {play_count: 7}]->(s7), (u3)-[:LISTENED_TO {play_count: 9}]->(s8), (u3)-[:LISTENED_TO {play_count: 4}]->(s12),
+  (u9)-[:LISTENED_TO {play_count: 10}]->(s1), (u9)-[:LISTENED_TO {play_count: 14}]->(s7), (u9)-[:LISTENED_TO {play_count: 6}]->(s11);
+
+// Grupo 2: Fãs de Hip Hop e Jazz
+CREATE
+  (u4)-[:LISTENED_TO {play_count: 25}]->(s13), (u4)-[:LISTENED_TO {play_count: 18}]->(s14), (u4)-[:LISTENED_TO {play_count: 10}]->(s17),
+  (u5)-[:LISTENED_TO {play_count: 12}]->(s15), (u5)-[:LISTENED_TO {play_count: 22}]->(s16), (u5)-[:LISTENED_TO {play_count: 5}]->(s13),
+  (u14)-[:LISTENED_TO {play_count: 8}]->(s19), (u14)-[:LISTENED_TO {play_count: 15}]->(s21), (u14)-[:LISTENED_TO {play_count: 4}]->(s17),
+  (u15)-[:LISTENED_TO {play_count: 30}]->(s23), (u15)-[:LISTENED_TO {play_count: 12}]->(s24), (u15)-[:LISTENED_TO {play_count: 9}]->(s19);
+
+// Grupo 3: Gostos Mistos para forçar o algoritmo colaborativo
+CREATE
+  (u6)-[:LISTENED_TO {play_count: 5}]->(s1), (u6)-[:LISTENED_TO {play_count: 4}]->(s13), (u6)-[:LISTENED_TO {play_count: 2}]->(s19),
+  (u7)-[:LISTENED_TO {play_count: 11}]->(s3), (u7)-[:LISTENED_TO {play_count: 8}]->(s7), (u7)-[:LISTENED_TO {play_count: 14}]->(s11),
+  (u8)-[:LISTENED_TO {play_count: 6}]->(s11), (u8)-[:LISTENED_TO {play_count: 9}]->(s12), (u8)-[:LISTENED_TO {play_count: 10}]->(s17),
+  (u10)-[:LISTENED_TO {play_count: 15}]->(s5), (u10)-[:LISTENED_TO {play_count: 12}]->(s6), (u10)-[:LISTENED_TO {play_count: 8}]->(s20),
+  (u11)-[:LISTENED_TO {play_count: 7}]->(s9), (u11)-[:LISTENED_TO {play_count: 5}]->(s10), (u11)-[:LISTENED_TO {play_count: 12}]->(s12),
+  (u12)-[:LISTENED_TO {play_count: 20}]->(s18), (u12)-[:LISTENED_TO {play_count: 18}]->(s22), (u12)-[:LISTENED_TO {play_count: 9}]->(s23),
+  (u13)-[:LISTENED_TO {play_count: 14}]->(s2), (u13)-[:LISTENED_TO {play_count: 10}]->(s4), (u13)-[:LISTENED_TO {play_count: 7}]->(s8);
