@@ -30,3 +30,5 @@ WHERE NOT (u1)-[:LISTENED_TO]->(recom)
 RETURN recom.title AS Recomendacao, COUNT(recom) AS Forca_Recomendacao
 ORDER BY Forca_Recomendacao DESC
 LIMIT 5
+
+OBS: O resultado pode ser visto no arquivo **recomendacao.png**
