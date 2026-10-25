@@ -30,5 +30,3 @@ WHERE NOT (u1)-[:LISTENED_TO]->(recom)
 RETURN recom.title AS Recomendacao, COUNT(recom) AS Forca_Recomendacao
 ORDER BY Forca_Recomendacao DESC
 LIMIT 5
-
-<img width="1276" height="289" alt="recomendacao" src="https://github.com/user-attachments/assets/a5cdfe55-e7db-4b29-b67c-3e82084409a1" />
